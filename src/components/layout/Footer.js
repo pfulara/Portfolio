@@ -58,6 +58,7 @@ const CircleMenuInner = styled("div")({
   display: "flex",
   justifyContent: "center",
   position: "relative",
+  bottom: "5px",
   cursor: "pointer",
   zIndex: "2"
 });

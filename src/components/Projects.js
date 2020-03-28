@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaGithub, FaCode } from "react-icons/fa";
+import { GoBrowser } from "react-icons/go";
 import ReactTooltip from "react-tooltip";
 
 const AStyled = styled("a")({
@@ -58,6 +59,32 @@ const ProjectBox = styled("div")({
 });
 
 const Projects = () => {
+  const [projects, setProjects] = useState([
+    {
+      title: "Paweł Fulara's Portfolio",
+      stack: ["React", "Styled components", "React Icons"],
+      githubLink: "https://github.com/pfulara/Portfolio",
+      csbLink: "https://codesandbox.io/s/tender-paper-dd38l"
+    },
+    {
+      title: "Pokedex",
+      stack: ["React", "Material UI", "pokeapi.co API"],
+      githubLink: "https://github.com/pfulara/Pokedex",
+      csbLink: "https://codesandbox.io/s/intelligent-architecture-2ztv5"
+    },
+    {
+      title: "Currency Price Checker",
+      stack: ["React", "Recharts", "Material UI", "NBP Web API"],
+      githubLink: "https://github.com/pfulara/Currency-Price-Checker",
+      csbLink: "https://codesandbox.io/s/compassionate-lederberg-dgobb"
+    },
+    {
+      title: "Social Portal",
+      stack: ["React", "Material UI", "Firebase"],
+      githubLink: "https://github.com/pfulara/Social-Portal",
+      ghpLink: "https://pfulara.github.io/social-portal"
+    }
+  ]);
   useEffect(() => {
     document.title = "Paweł Fulara's Portfolio - My Projects";
   }, []);
@@ -65,98 +92,46 @@ const Projects = () => {
     <>
       <h1>My projects</h1>
       <ProjectConteiner>
-        <ProjectBox>
-          <h3>Paweł Fulara's Portfolio</h3>
-          <h4>Used stack:</h4>
-          <ul>
-            <li>React</li>
-            <li>Styled components</li>
-            <li>React Icons</li>
-          </ul>
-          <div>
-            <AStyled
-              data-tip="Check on Github"
-              target="_blank"
-              href="https://github.com/pfulara/Portfolio"
-            >
-              <FaGithub />
-            </AStyled>
-            <AStyled
-              data-tip="Check on codesandbox.io"
-              target="_blank"
-              href="https://codesandbox.io/s/elated-bouman-ub8iy"
-            >
-              <FaCode />
-            </AStyled>
-          </div>
-        </ProjectBox>
-        <ProjectBox>
-          <h3>Pokedex</h3>
-          <h4>Used stack:</h4>
-          <ul>
-            <li>React</li>
-            <li>Material UI</li>
-            <li>
-              <a
-                href="https://pokeapi.co"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Poke API
-              </a>
-            </li>
-          </ul>
-          <div>
-            <AStyled
-              data-tip="Check on Github"
-              target="_blank"
-              href="https://github.com/pfulara/Pokedex"
-            >
-              <FaGithub />
-            </AStyled>
-            <AStyled
-              data-tip="Check on codesandbox.io"
-              target="_blank"
-              href="https://codesandbox.io/s/intelligent-architecture-2ztv5"
-            >
-              <FaCode />
-            </AStyled>
-          </div>
-        </ProjectBox>
-        <ProjectBox>
-          <h3>Currency Price Checker</h3>
-          <h4>Used stack:</h4>
-          <ul>
-            <li>React</li>
-            <li>Recharts</li>
-            <li>Material UI</li>
-            <li>
-              <a
-                href="https://api.nbp.pl"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                NBP Web API
-              </a>
-            </li>
-          </ul>
-          <div>
-            <AStyled
-              data-tip="Check on Github"
-              target="_blank"
-              href="https://github.com/pfulara/Currency-Price-Checker"
-            >
-              <FaGithub />
-            </AStyled>
-            <AStyled
-              data-tip="Check on codesandbox.io"
-              target="_blank"
-              href="https://codesandbox.io/s/compassionate-lederberg-dgobb"
-            >
-              <FaCode />
-            </AStyled>
-          </div>
-        </ProjectBox>
+        {projects.map((item, index) => {
+          return (
+            <ProjectBox key={index}>
+              <h3>{item.title}</h3>
+              <h4>Used stack:</h4>
+              <ul>
+                {item.stack.map((stackItem, stackIndex) => {
+                  return <li key={stackIndex}>{stackItem}</li>;
+                })}
+              </ul>
+              <div>
+                <AStyled
+                  data-tip="Check on Github"
+                  target="_blank"
+                  href={item.githubLink}
+                >
+                  <FaGithub />
+                </AStyled>
+                {item.csbLink ? (
+                  <AStyled
+                    data-tip="Check on codesandbox.io"
+                    target="_blank"
+                    href={item.csbLink}
+                  >
+                    <FaCode />
+                  </AStyled>
+                ) : null}
+                {item.ghpLink ? (
+                  <AStyled
+                    data-tip="Check on Github Pages"
+                    target="_blank"
+                    href={item.ghpLink}
+                  >
+                    <GoBrowser />
+                  </AStyled>
+                ) : null}
+              </div>
+            </ProjectBox>
+          );
+        })}
       </ProjectConteiner>
       <ReactTooltip place="bottom" effect="solid" />
     </>
