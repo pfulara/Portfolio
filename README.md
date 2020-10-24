@@ -5,3 +5,4 @@
 - React
 - Styled Components
 - React Icons
+- Firebase
