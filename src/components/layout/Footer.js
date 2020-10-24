@@ -131,7 +131,7 @@ const Footer = () => {
               </Link>
             </MenuItem>
             <MenuItem onClick={hiddeMenu} style={{ left: "43%", top: "10%" }}>
-              <Link to="/home">
+              <Link to="/">
                 <FaHome />
               </Link>
             </MenuItem>

@@ -3,6 +3,12 @@ import styled from "styled-components";
 import { FaGithub, FaCode } from "react-icons/fa";
 import { GoBrowser } from "react-icons/go";
 import ReactTooltip from "react-tooltip";
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
+import database from "./../database";
+import Loader from './Loader';
 
 const AStyled = styled("a")({
   "&:hover": {
@@ -59,81 +65,85 @@ const ProjectBox = styled("div")({
 });
 
 const Projects = () => {
-  const [projects, setProjects] = useState([
-    {
-      title: "Paweł Fulara's Portfolio",
-      stack: ["React", "Styled components", "React Icons"],
-      githubLink: "https://github.com/pfulara/Portfolio",
-      csbLink: "https://codesandbox.io/s/tender-paper-dd38l"
-    },
-    {
-      title: "Pokedex",
-      stack: ["React", "Material UI", "pokeapi.co API"],
-      githubLink: "https://github.com/pfulara/Pokedex",
-      csbLink: "https://codesandbox.io/s/intelligent-architecture-2ztv5"
-    },
-    {
-      title: "Currency Price Checker",
-      stack: ["React", "Recharts", "Material UI", "NBP Web API"],
-      githubLink: "https://github.com/pfulara/Currency-Price-Checker",
-      csbLink: "https://codesandbox.io/s/compassionate-lederberg-dgobb"
-    },
-    {
-      title: "Social Portal",
-      stack: ["React", "Material UI", "Firebase"],
-      githubLink: "https://github.com/pfulara/Social-Portal",
-      ghpLink: "https://pfulara.github.io/social-portal"
-    }
-  ]);
+
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+
     document.title = "Paweł Fulara's Portfolio - My Projects";
+    database
+      .firestore()
+      .collection('projects')
+      .get()
+      .then( querySnapshot => {
+        const id = querySnapshot.docs.map( doc => doc.id);
+        const data = querySnapshot.docs.map( doc => doc.data());
+        let merged = [];
+        id.map((item, index) => {
+          return merged.push({
+            id: item,
+            ...data[index]
+          })
+        });
+        setProjects(merged);
+        setLoading(false);
+      });
+
   }, []);
   return (
     <>
-      <h1>My projects</h1>
-      <ProjectConteiner>
-        {projects.map((item, index) => {
-          return (
-            <ProjectBox key={index}>
-              <h3>{item.title}</h3>
-              <h4>Used stack:</h4>
-              <ul>
-                {item.stack.map((stackItem, stackIndex) => {
-                  return <li key={stackIndex}>{stackItem}</li>;
-                })}
-              </ul>
-              <div>
-                <AStyled
-                  data-tip="Check on Github"
-                  target="_blank"
-                  href={item.githubLink}
-                >
-                  <FaGithub />
-                </AStyled>
-                {item.csbLink ? (
-                  <AStyled
-                    data-tip="Check on codesandbox.io"
-                    target="_blank"
-                    href={item.csbLink}
-                  >
-                    <FaCode />
-                  </AStyled>
-                ) : null}
-                {item.ghpLink ? (
-                  <AStyled
-                    data-tip="Check on Github Pages"
-                    target="_blank"
-                    href={item.ghpLink}
-                  >
-                    <GoBrowser />
-                  </AStyled>
-                ) : null}
-              </div>
-            </ProjectBox>
-          );
-        })}
-      </ProjectConteiner>
-      <ReactTooltip place="bottom" effect="solid" />
+      {loading ? (
+      <Loader />
+      ) : (
+        <>
+          <h1>My projects</h1>
+          <ProjectConteiner>
+            {projects.map((item, index) => {
+              return (
+                <ProjectBox key={index}>
+                  <h3>{item.title}</h3>
+                  <h4>Used stack:</h4>
+                  <ul>
+                    {item.stack.map((stackItem, stackIndex) => {
+                      return <li key={stackIndex}>{stackItem}</li>;
+                    })}
+                  </ul>
+                  <div>
+                    <AStyled
+                      data-tip="Check on Github"
+                      target="_blank"
+                      href={item.githubLink}
+                    >
+                      <FaGithub />
+                    </AStyled>
+                    {item.csbLink ? (
+                      <AStyled
+                        data-tip="Check on codesandbox.io"
+                        target="_blank"
+                        href={item.csbLink}
+                      >
+                        <FaCode />
+                      </AStyled>
+                    ) : null}
+                    {item.ghpLink ? (
+                      <AStyled
+                        data-tip="Check on Github Pages"
+                        target="_blank"
+                        href={item.ghpLink}
+                      >
+                        <GoBrowser />
+                      </AStyled>
+                    ) : null}
+                  </div>
+                </ProjectBox>
+              );
+            })}
+          </ProjectConteiner>
+          <ReactTooltip place="bottom" effect="solid" />
+        </>
+      )}
+      
     </>
   );
 };
