@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FaHome, FaRegEnvelope, FaLaptopCode } from "react-icons/fa";
+import { FaHome, FaGraduationCap, FaLaptopCode } from "react-icons/fa";
 
 const FooterStyled = styled("footer")({
   position: "fixed",
@@ -84,9 +84,15 @@ const MainMenu = styled("ul")({
 
 const MenuItem = styled("li")({
   "&:hover a": {
-    color: "#45ff09"
+    color: "#00fff9",
+    textShadow: "0 0 10px #00fff9, 0 0 20px #00fff9"
   },
   a: {
+    "& span": {
+      fontSize: "0.5rem",
+      position: "absolute",
+      bottom: "-4px"
+    },
     color: "#fff",
     fontSize: "1.5rem"
   },
@@ -128,16 +134,19 @@ const Footer = () => {
             <MenuItem onClick={hiddeMenu} style={{ left: "15%", top: "25%" }}>
               <Link to="/projects">
                 <FaLaptopCode />
+                <span style={{ left: -5 }}>Projects</span>
               </Link>
             </MenuItem>
             <MenuItem onClick={hiddeMenu} style={{ left: "43%", top: "10%" }}>
               <Link to="/">
                 <FaHome />
+                <span style={{ left: 0 }}>Home</span>
               </Link>
             </MenuItem>
             <MenuItem onClick={hiddeMenu} style={{ left: "70%", top: "25%" }}>
-              <Link to="/contact">
-                <FaRegEnvelope />
+              <Link to="/skills">
+                <FaGraduationCap />
+                <span style={{ left: 0 }}>Skills</span>
               </Link>
             </MenuItem>
           </MainMenu>

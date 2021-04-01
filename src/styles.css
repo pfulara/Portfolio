@@ -29,9 +29,34 @@ li {
   width: 100%;
 }
 
+#subpage {
+  text-align: left;
+  min-width: 870px;
+}
+ #subpage h1 {
+   text-align: center;
+ }
+
+ .skillItem {
+   display: flex;
+ }
+ .skillItem svg {
+   margin-right: 15px;
+   font-size: 1.8rem;
+   margin-top: 13px;
+ }
+
 @media screen and (max-width: 869px) {
   #main {
     padding-top: 100px;
+    justify-content: flex-start;
+    text-align: left;
+    padding-bottom: 70px;
+  }
+  #subpage {
+    text-align: left;
+    width: 100%;
+    min-width: auto;
   }
 }
 
@@ -67,13 +92,13 @@ li {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: #00ff0a;
-  box-shadow: 0 0 10px #00ff0a,
-              0 0 20px #00ff0a,
-              0 0 40px #00ff0a,
-              0 0 60px #00ff0a,
-              0 0 80px #00ff0a,
-              0 0 100px #00ff0a;
+  background-color: #00fff9;
+  box-shadow: 0 0 10px #00fff9,
+              0 0 20px #00fff9,
+              0 0 40px #00fff9,
+              0 0 60px #00fff9,
+              0 0 80px #00fff9,
+              0 0 100px #00fff9;
   animation: loaderAnim 2s linear infinite;
   animation-delay: calc(.1s * var(--i));
   transform: scale(0);

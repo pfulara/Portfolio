@@ -3,12 +3,10 @@ import styled from "styled-components";
 import { FaGithub, FaCode } from "react-icons/fa";
 import { GoBrowser } from "react-icons/go";
 import ReactTooltip from "react-tooltip";
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 
 import database from "./../database";
 import Loader from './Loader';
+import ProjectModal from './layout/ProjectModal';
 
 const AStyled = styled("a")({
   "&:hover": {
@@ -46,8 +44,7 @@ const ProjectBox = styled("div")({
     fontSize: "1rem"
   },
   "&:hover": {
-    transform: "scale(1.15)",
-    zIndex: "2"
+    transform: "scale(1.03)"
   },
   color: "#d7d9ff",
   position: "relative",
@@ -61,13 +58,16 @@ const ProjectBox = styled("div")({
   justifyContent: "flex-start",
   alignItems: "center",
   flexDirection: "column",
-  borderRadius: "10px"
+  borderRadius: "10px",
+  cursor: "pointer"
 });
 
 const Projects = () => {
 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
+  const [singleProject, setSingleProject] = useState(null);
 
   useEffect(() => {
 
@@ -101,7 +101,7 @@ const Projects = () => {
           <ProjectConteiner>
             {projects.map((item, index) => {
               return (
-                <ProjectBox key={index}>
+                <ProjectBox key={index} onClick={() => {setModal(true); setSingleProject(item)}}>
                   <h3>{item.title}</h3>
                   <h4>Used stack:</h4>
                   <ul>
@@ -141,6 +141,7 @@ const Projects = () => {
             })}
           </ProjectConteiner>
           <ReactTooltip place="bottom" effect="solid" />
+          <ProjectModal project={singleProject} open={modal} setOpen={setModal} />
         </>
       )}
       
