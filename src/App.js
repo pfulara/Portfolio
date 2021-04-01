@@ -6,7 +6,7 @@ import "./styles.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/Home";
-import Contact from "./components/Contact";
+import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 
 export default function App() {
@@ -15,8 +15,8 @@ export default function App() {
       <div id="main">
         <Header />
         <Switch>
-          <Route path="/contact">
-            <Contact />
+          <Route path="/skills">
+            <Skills />
           </Route>
           <Route path="/projects">
             <Projects />
